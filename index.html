@@ -2,437 +2,593 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Learning Hub</title>
+
 <script src="https://www.youtube.com/iframe_api"></script>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui}
-body{background:#0f172a;color:#fff;height:100vh;overflow:hidden}
-header{
-height:70px;background:#111827;display:flex;
-align-items:center;justify-content:space-between;
-padding:0 25px;border-bottom:1px solid #1f2937
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,system-ui,sans-serif;
 }
-.logo{font-size:24px;font-weight:700}
+
+:root{
+    --bg:#0f172a;
+    --sidebar:#111827;
+    --card:#1e293b;
+    --border:#334155;
+    --text:#ffffff;
+    --muted:#94a3b8;
+    --accent:#2563eb;
+    --green:#22c55e;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    height:100vh;
+    overflow:hidden;
+}
+
+.header{
+    height:70px;
+    background:var(--sidebar);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+}
+
 .search{
-background:#1f2937;border:none;color:#fff;
-padding:12px 15px;border-radius:10px;width:250px
+    width:280px;
+    padding:12px;
+    border:none;
+    outline:none;
+    background:var(--card);
+    color:white;
+    border-radius:10px;
 }
+
 .container{
-display:grid;
-grid-template-columns:330px 1fr;
-height:calc(100vh - 70px)
+    display:grid;
+    grid-template-columns:340px 1fr;
+    height:calc(100vh - 70px);
 }
+
 .sidebar{
-background:#111827;
-padding:20px;
-overflow-y:auto;
-border-right:1px solid #1f2937;
+    background:var(--sidebar);
+    padding:20px;
+    overflow-y:auto;
+    border-right:1px solid var(--border);
 }
-.add{
-display:flex;
-flex-direction:column;
-gap:10px;
-margin-bottom:20px;
-}
-input,button{
-padding:12px;
-border:none;
-border-radius:10px;
-font-size:14px;
-}
-input{
-background:#1f2937;
-color:#fff;
-}
-button{
-background:#2563eb;
-color:#fff;
-cursor:pointer;
-}
-.card{
-background:#1f2937;
-border-radius:15px;
-overflow:hidden;
-margin-bottom:15px;
-cursor:pointer;
-transition:.2s;
-}
-.card:hover{
-transform:translateY(-3px);
-}
-.thumb{
-width:100%;
-height:170px;
-object-fit:cover;
-}
-.content{
-padding:15px;
-}
-.title{
-font-size:15px;
-font-weight:600;
-margin-bottom:10px;
-}
-.progress{
-height:7px;
-background:#334155;
-border-radius:20px;
-overflow:hidden;
-}
-.bar{
-height:100%;
-background:#22c55e;
-}
-.meta{
-display:flex;
-justify-content:space-between;
-margin-top:10px;
-font-size:12px;
-color:#94a3b8;
-}
+
 .player-area{
-padding:25px;
-overflow:auto;
+    padding:20px;
+    overflow-y:auto;
 }
-.video-box{
-background:#111827;
-padding:20px;
-border-radius:20px;
+
+.add-box{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:25px;
 }
+
+input,button{
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    font-size:14px;
+}
+
+input{
+    background:var(--card);
+    color:white;
+}
+
+button{
+    background:var(--accent);
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.course-card{
+    background:var(--card);
+    border-radius:15px;
+    overflow:hidden;
+    margin-bottom:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.course-card:hover{
+    transform:translateY(-4px);
+}
+
+.thumbnail{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.course-content{
+    padding:15px;
+}
+
+.course-title{
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.course-meta{
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.video-container{
+    background:var(--sidebar);
+    border-radius:20px;
+    overflow:hidden;
+}
+
 #player{
-width:100%;
-aspect-ratio:16/9;
+    width:100%;
+    aspect-ratio:16/9;
 }
-.info{
-margin-top:20px;
+
+.video-info{
+    padding:20px;
 }
+
+.video-title{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
 .actions{
-display:flex;
-gap:10px;
-margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
-.star{
-font-size:18px;
+
+.secondary{
+    background:var(--card);
 }
-@media(max-width:900px){
-.container{
-grid-template-columns:1fr;
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:50px 0;
 }
-.sidebar{
-height:350px;
-}
+
+@media(max-width:1000px){
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        max-height:350px;
+    }
+
+    .search{
+        width:150px;
+    }
+
+    .video-title{
+        font-size:22px;
+    }
 }
 </style>
 </head>
+
 <body>
 
-<header>
-<div class="logo">📚 Learning Hub</div>
-<input class="search" id="search" placeholder="Search..."
-oninput="render()">
-</header>
+<div class="header">
+    <div class="logo">📚 Learning Hub</div>
+
+    <input
+        class="search"
+        id="search"
+        placeholder="Search..."
+        oninput="renderCourses()">
+</div>
 
 <div class="container">
 
-<div class="sidebar">
+    <div class="sidebar">
 
-<div class="add">
-<input id="title" placeholder="Course title">
-<input id="url" placeholder="Paste YouTube link">
-<button onclick="addCourse()">Add Course</button>
-</div>
+        <div class="add-box">
 
-<div id="courses"></div>
+            <input
+                id="title"
+                placeholder="Course title">
 
-</div>
+            <input
+                id="url"
+                placeholder="Paste YouTube link">
 
-<div class="player-area">
+            <button onclick="addCourse()">
+                Add Course
+            </button>
 
-<div class="video-box">
+        </div>
 
-<div id="player"></div>
+        <div id="courseList"></div>
 
-<div class="info">
-<h2 id="currentTitle">
-Select a course
-</h2>
+    </div>
 
-<p id="status">
-Progress: 0%
-</p>
+    <div class="player-area">
 
-<div class="actions">
-<button onclick="fullscreenPlayer()">
-⛶ Fullscreen
-</button>
-</div>
-</div>
+        <div class="video-container">
 
-</div>
+            <div id="player"></div>
 
-</div>
+            <div class="video-info">
+
+                <h1
+                    class="video-title"
+                    id="currentTitle">
+                    Select a Course
+                </h1>
+
+                <div class="actions">
+
+                    <button
+                        onclick="fullscreenPlayer()">
+                        ⛶ Fullscreen
+                    </button>
+
+                    <button
+                        class="secondary"
+                        onclick="toggleFavorite()">
+                        ⭐ Favorite
+                    </button>
+
+                    <button
+                        class="secondary"
+                        onclick="deleteCurrent()">
+                        🗑 Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script>
-const STORAGE="learninghub";
+
+const STORAGE="learning_hub";
+
 let player;
 let playerReady=false;
-let currentCourse=null;
-let saveTimer=null;
+let currentIndex=null;
 
-function db(){
-return JSON.parse(
-localStorage.getItem(STORAGE)||"[]"
-);
+function getCourses(){
+    return JSON.parse(
+        localStorage.getItem(STORAGE)
+        ||"[]"
+    );
 }
 
-function save(data){
-localStorage.setItem(
-STORAGE,
-JSON.stringify(data)
-);
+function saveCourses(data){
+    localStorage.setItem(
+        STORAGE,
+        JSON.stringify(data)
+    );
 }
 
 function extractID(url){
-try{
-const u=new URL(url);
 
-if(u.searchParams.get("v"))
-return u.searchParams.get("v");
+    try{
 
-if(u.hostname.includes("youtu.be"))
-return u.pathname.slice(1);
+        const u=new URL(url);
 
-if(u.pathname.includes("/shorts/"))
-return u.pathname.split("/shorts/")[1];
+        if(u.searchParams.get("v"))
+            return u.searchParams.get("v");
 
-return null;
-}catch{
-return null;
-}
+        if(u.hostname.includes("youtu.be"))
+            return u.pathname.slice(1);
+
+        if(u.pathname.includes("/shorts/"))
+            return u.pathname.split(
+                "/shorts/"
+            )[1];
+
+        return null;
+
+    }catch{
+        return null;
+    }
 }
 
 function addCourse(){
 
-const title=
-document.getElementById("title").value.trim();
+    const title=
+        document
+        .getElementById(
+            "title"
+        ).value.trim();
 
-const url=
-document.getElementById("url").value.trim();
+    const url=
+        document
+        .getElementById(
+            "url"
+        ).value.trim();
 
-const id=extractID(url);
+    const id=
+        extractID(url);
 
-if(!title||!id){
-alert("Invalid YouTube link");
-return;
+    if(!title || !id){
+        alert(
+          "Invalid YouTube URL"
+        );
+        return;
+    }
+
+    const courses=
+        getCourses();
+
+    courses.push({
+        title,
+        id,
+        favorite:false
+    });
+
+    saveCourses(courses);
+
+    document
+    .getElementById(
+        "title"
+    ).value="";
+
+    document
+    .getElementById(
+        "url"
+    ).value="";
+
+    renderCourses();
 }
 
-const data=db();
+function renderCourses(){
 
-data.push({
-title,
-id,
-current:0,
-percent:0,
-favorite:false
-});
+    const search=
+        document
+        .getElementById(
+            "search"
+        )
+        .value
+        .toLowerCase();
 
-save(data);
+    const courses=
+        getCourses();
 
-document.getElementById("title").value="";
-document.getElementById("url").value="";
+    const list=
+        document
+        .getElementById(
+            "courseList"
+        );
 
-render();
-}
+    list.innerHTML="";
 
-function toggleFav(i){
-const data=db();
-data[i].favorite=!data[i].favorite;
-save(data);
-render();
-}
+    if(courses.length===0){
 
-function removeCourse(i){
-if(!confirm("Delete course?"))return;
-const data=db();
-data.splice(i,1);
-save(data);
-render();
-}
+        list.innerHTML=
+        `<div class="empty">
+            No courses yet
+        </div>`;
 
-function render(){
+        return;
+    }
+      courses.forEach((course,index)=>{
 
-const search=
-document.getElementById("search")
-.value.toLowerCase();
+        if(
+            !course.title
+            .toLowerCase()
+            .includes(search)
+        ) return;
 
-const data=db();
+        list.innerHTML += `
+        <div class="course-card"
+             onclick="playCourse(${index})">
 
-const courses=
-document.getElementById("courses");
+            <img
+                class="thumbnail"
+                src="https://img.youtube.com/vi/${course.id}/hqdefault.jpg">
 
-courses.innerHTML="";
+            <div class="course-content">
 
-data.forEach((c,i)=>{
+                <div class="course-title">
+                    ${
+                      course.favorite
+                      ? "⭐ "
+                      : ""
+                    }
+                    ${course.title}
+                </div>
 
-if(!c.title
-.toLowerCase()
-.includes(search))
-return;
+                <div class="course-meta">
 
-courses.innerHTML+=`
-<div class="card"
-onclick="playCourse(${i})">
+                    <span>
+                        YouTube
+                    </span>
 
-<img class="thumb"
-src="https://img.youtube.com/vi/${c.id}/hqdefault.jpg">
+                    <span>
+                        ${
+                          course.favorite
+                          ? "★"
+                          : "☆"
+                        }
+                    </span>
 
-<div class="content">
+                </div>
 
-<div class="title">
-${c.favorite?"⭐ ":""}${c.title}
-</div>
+            </div>
 
-<div class="progress">
-<div class="bar"
-style="width:${c.percent}%">
-</div>
-</div>
-
-<div class="meta">
-<span>${c.percent}%</span>
-
-<span onclick="
-event.stopPropagation();
-toggleFav(${i});
-">
-${c.favorite?"★":"☆"}
-</span>
-
-<span onclick="
-event.stopPropagation();
-removeCourse(${i});
-">
-🗑
-</span>
-</div>
-
-</div>
-</div>
-`;
-});
+        </div>
+        `;
+    });
 }
 
 function onYouTubeIframeAPIReady(){
 
-player=new YT.Player(
-"player",
-{
-playerVars:{
-rel:0,
-modestbranding:1
-},
-events:{
-onReady:()=>{
-playerReady=true;
-},
-onStateChange:(e)=>{
-if(e.data===YT.PlayerState.PLAYING){
-startSaving();
-}
-}
-}
-}
-);
+    player =
+    new YT.Player(
+        "player",
+        {
+            playerVars:{
+                rel:0,
+                modestbranding:1
+            },
+
+            events:{
+
+                onReady:()=>{
+                    playerReady=true;
+                },
+
+                onError:(e)=>{
+                    alert(
+                      "This video cannot be played in the embedded player."
+                    );
+                    console.log(e);
+                }
+            }
+        }
+    );
 }
 
 function playCourse(index){
 
-if(!playerReady){
-alert("Player loading...");
-return;
+    if(!playerReady){
+        alert(
+          "Player still loading..."
+        );
+        return;
+    }
+
+    currentIndex=index;
+
+    const courses=
+        getCourses();
+
+    const course=
+        courses[index];
+
+    document
+    .getElementById(
+        "currentTitle"
+    ).innerText=
+    course.title;
+
+    try{
+
+        player.loadVideoById(
+            course.id
+        );
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(
+          "Unable to play video."
+        );
+    }
 }
 
-currentCourse=index;
+function toggleFavorite(){
 
-const data=db();
-const course=data[index];
+    if(currentIndex===null)
+        return;
 
-document
-.getElementById("currentTitle")
-.innerText=course.title;
+    const courses=
+        getCourses();
 
-document
-.getElementById("status")
-.innerText=
-`Progress: ${course.percent}%`;
+    courses[
+        currentIndex
+    ].favorite=
+    !courses[
+        currentIndex
+    ].favorite;
 
-player.loadVideoById({
-videoId:course.id,
-startSeconds:course.current||0
-});
+    saveCourses(
+        courses
+    );
+
+    renderCourses();
 }
 
-function startSaving(){
+function deleteCurrent(){
 
-clearInterval(saveTimer);
+    if(currentIndex===null)
+        return;
 
-saveTimer=setInterval(()=>{
+    if(
+      !confirm(
+       "Delete this course?"
+      )
+    ) return;
 
-if(currentCourse===null)
-return;
+    const courses=
+        getCourses();
 
-try{
+    courses.splice(
+        currentIndex,
+        1
+    );
 
-const current=
-player.getCurrentTime();
+    saveCourses(
+        courses
+    );
 
-const duration=
-player.getDuration();
+    currentIndex=null;
 
-if(duration>0){
+    document
+    .getElementById(
+        "currentTitle"
+    ).innerText=
+    "Select a Course";
 
-const data=db();
-
-data[currentCourse]
-.current=current;
-
-data[currentCourse]
-.percent=Math.floor(
-(current/duration)*100
-);
-
-save(data);
-
-document
-.getElementById("status")
-.innerText=
-`Progress: ${
-data[currentCourse]
-.percent
-}%`;
-
-render();
-}
-
-}catch(e){}
-
-},5000);
+    renderCourses();
 }
 
 function fullscreenPlayer(){
 
-const iframe=
-document
-.querySelector("#player iframe");
+    const iframe=
+    document.querySelector(
+        "#player iframe"
+    );
 
-if(iframe?.requestFullscreen)
-iframe.requestFullscreen();
+    if(
+       iframe &&
+       iframe.requestFullscreen
+    ){
+        iframe
+        .requestFullscreen();
+    }
 }
 
-render();
+renderCourses();
+
 </script>
 
 </body>
